@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&family=UnifrakturMaguntia&display=swap');
+@import 'tailwindcss';
+@plugin 'daisyui';
+
+body {
+  font-family: 'Oxanium', sans-serif;
+  /* font-family: 'UnifrakturMaguntia', cursive; */
+}
+
+.oxanium {
+  font-family: 'Oxanium', sans-serif;
+}
+
+.uni {
+  font-family: 'UnifrakturMaguntia', cursive;
+}
