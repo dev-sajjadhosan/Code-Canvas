@@ -1,54 +1,59 @@
-# React + TypeScript + Vite
+# Code Canvas (cooking)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Assalamu Alaikum! Welcome to my personal collection of foundational projects built with the **core web technologies** — HTML5, CSS3, JavaScript, and TypeScript. This is a space where I demonstrate my growth and learning in front-end development through hands-on, real-world examples.
 
-Currently, two official plugins are available:
+## Technologies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Front-end
 
-## Expanding the ESLint configuration
+  - React
+  - Tailwindcss
+  - DaisyUi
+  - React-icons
+  -
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Back-end
+  - NodeJs
+  - ExpressJs
+  -
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## ✨ What's Inside
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Each project highlights a specific concept or use case, built to reinforce my understanding of:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **HTML5**: Semantic markup and clean structure
+- **CSS3**: Responsive layouts, modern styling, and animations
+- **JavaScript (ES6+)**: Dynamic behavior, DOM manipulation, and logic
+- **TypeScript**: Type safety, interfaces, and cleaner code organization
+- **Ui Designs**: only ui design, interfaces, wireframe
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🧩 Project Categories
+
+Projects are grouped by difficulty and scope:
+
+- 🟢 **Beginner** – Simple, focused apps and components (e.g., calculators, forms)
+- 🟡 **Intermediate** – Functional UI elements and interactive designs
+- 🔴 **Professional** – More complete mini-projects with TypeScript and structure
+- 🔵 **More** - if possible **Normal**,**Medium**,**Hard** projects will also show
+
+## 🚀 How to Explore
+
+You can view all the new projects in a horizontal carousel interface with smooth scrolling. Each card links to the source or a live preview (if available).
+
+## 🙌 Why I Built This
+
+This site is more than just a portfolio — it's a timeline of my learning journey and a growing reference for future work. Every project is an opportunity to try something new and improve my fundamentals.
+
+## 🔗 Live Preview
+
+[👉 View the live site here](https://your-live-site-link.com)
+
+## 📫 Feedback & Collaboration
+
+If you're a fellow developer or mentor and have feedback or suggestions, feel free to [open an issue](https://github.com/dev-sajjadhosan/your-repo/issues) or connect with me on [LinkedIn](https://linkedin.com/in/yourname).
+
+<!-- --- -->
+
+<!-- > _"Build small. Build often. Learn forever."_ -->
+
+> <p><strong>⚠️ Warning:</strong> This project is not for copy. Came see my project and build your own . Do not copy my Website!</p>
