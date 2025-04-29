@@ -2,9 +2,13 @@ import { useState } from 'react'
 import { IoMdArrowDropleft } from 'react-icons/io'
 import { LuImageDown, LuImageUpscale } from 'react-icons/lu'
 import CarouselContainer from '../../components/CarouselContainer'
+import { FaCss3Alt, FaHtml5 } from 'react-icons/fa'
+import { FaSquareJs } from 'react-icons/fa6'
+import { TbBookDownload, TbClipboardCopy } from 'react-icons/tb'
 
 const DetailPage = () => {
   const [pV, setPV] = useState(false)
+  const [code, setCode] = useState(1)
   return (
     <div className="p-10 relative">
       {/* image view */}
@@ -95,8 +99,84 @@ const DetailPage = () => {
         </div>
       </div>
 
-      <div className="mt-9">
-        <h2 className="text-2xl mb-3"># More Projects</h2>
+      <div className="mt-10 flex flex-col">
+        <div className="flex self-end mr-5 gap-2">
+          <button
+            role="tab"
+            className={`btn ${
+              code === 1 ? ' btn-accent' : 'btn-ghost'
+            } tooltip`}
+            data-tip="Html"
+            onClick={() => setCode(1)}
+          >
+            <FaHtml5 className="text-lg" />
+          </button>
+          <button
+            role="tab"
+            className={`btn ${
+              code === 2 ? ' btn-accent' : 'btn-ghost'
+            } tooltip`}
+            data-tip="Css"
+            onClick={() => setCode(2)}
+          >
+            <FaCss3Alt className="text-lg" />
+          </button>
+          <button
+            role="tab"
+            className={`btn ${
+              code === 3 ? ' btn-accent' : 'btn-ghost'
+            } tooltip`}
+            data-tip="JavaScript"
+            onClick={() => setCode(3)}
+          >
+            <FaSquareJs className="text-lg" />
+          </button>
+        </div>
+        <div className="mt-3 card bg-neutral-700 p-8 h-[40rem] overflow-auto relative">
+          <div className="sticky top-1 flex items-center justify-end gap-3">
+            <button className="btn btn-sm tooltip" data-tip="Copy">
+              <TbClipboardCopy className="text-lg" />
+            </button>
+            <button className="btn btn-sm tooltip" data-tip="Download">
+              <TbBookDownload className="text-lg" />
+            </button>
+          </div>
+          <pre>
+            <code className="text-sm transform transition-all duration-150">{`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">John Doe</div>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="home">
+      <h1>Hello, I'm John Doe</h1>
+      <p>Frontend Developer</p>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>`}</code>
+          </pre>
+        </div>
+      </div>
+
+      <div className="mt-15">
+        <h2 className="text-2xl mb-1"># More Projects</h2>
         {/* <div className="w-full overflow-x-auto scroll-smooth whitespace-nowrap py-4 px-2 space-x-4 flex snap-x snap-mandatory">
           {[...Array(10).keys()].map((i) => (
             <div
