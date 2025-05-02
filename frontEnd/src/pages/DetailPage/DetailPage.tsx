@@ -76,7 +76,7 @@ const DetailPage = () => {
       {/* image view */}
 
       <div
-        className={`transition-all duration-250 fixed ${
+        className={`rounded-2xl transition-all duration-250 fixed ${
           pV ? 'top-1/2 opacity-100' : '-top-1/2 opacity-0'
         }  left-1/2 -translate-1/2 w-4xl h-[30rem] bg-black/40 backdrop-blur-sm z-20 flex flex-col justify-center items-center`}
       >
@@ -94,7 +94,7 @@ const DetailPage = () => {
         </button>
       </div>
 
-      <div className="w-11/12  mx-auto p-10">
+      <div className="w-11/12 mx-auto p-5">
         <h2 className="text-2xl text-right mb-3"># Project $00</h2>
         <div className="flex justify-between gap-3 w-full">
           <div className="relative">
@@ -113,7 +113,7 @@ const DetailPage = () => {
             <p className="text-sm tracking-wide first-letter:text-3xl">
               {description}
             </p>
-            <div className="mt-5 space-x-3 ml-5">
+            <div className="mt-5 space-x-1 ml-5">
               <Link
                 to={'https://github.com/dev-sajjadhosan?tab=repositories'}
                 className="btn btn-link"

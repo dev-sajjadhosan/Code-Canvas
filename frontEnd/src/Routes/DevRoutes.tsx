@@ -3,7 +3,6 @@ import useAuth from '../hooks/useAuth'
 
 const DevRoutes = ({ children }) => {
   const { dev, loading } = useAuth()
-  console.log(dev)
   if (loading)
     return (
       <div className="flex items-center justify-center h-screen">

@@ -5,8 +5,8 @@ import Home from './pages/Home/Home'
 function Layout() {
   return (
     <div className="flex flex-col relative w-11/12 mx-auto">
-      <Outlet />
-      {/* <Home /> */}
+      {/* <Outlet /> */}
+      <Home />
       <SideNav />
     </div>
   )

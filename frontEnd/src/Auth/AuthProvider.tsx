@@ -13,7 +13,7 @@ import {
   useState,
 } from 'react'
 import app from '../../firebase/firebase'
-import { redirect } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 import AuthContextType from '../types/types'
 
 export const authContext = createContext<AuthContextType | null>(null)
@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const auth = getAuth(app)
   const gP = new GoogleAuthProvider()
+  const navigate = useNavigate()
 
   useEffect(() => {
     document.body.addEventListener('keyup', (e) => {
@@ -31,7 +32,6 @@ const AuthProvider = ({ children }) => {
         setDevS(true)
       }
     })
-
     const unSub = onAuthStateChanged(auth, (c) => {
       console.log(c)
       setDev(c?.email)
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, gP)
   }
 
-  const contextValues = { handleGP, dev, devS,loading }
+  const contextValues = { handleGP, dev, devS, loading }
 
   return (
     <authContext.Provider value={contextValues}>

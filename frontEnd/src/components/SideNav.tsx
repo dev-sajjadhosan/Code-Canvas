@@ -8,7 +8,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
 const SideNav = () => {
-  const { devS } = useAuth()
+  const { devS, dev } = useAuth()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   return (
@@ -48,9 +48,15 @@ const SideNav = () => {
               <LuLayers className="text-lg" />
             </a>
           </li>
-          {devS && (
+          {devS || (dev === 'devsajjadhosan@gmail.com') && (
             <li className="tooltip tooltip-right" data-tip="Projects">
-              <Link to="/dashboard-login">
+              <Link
+                to={
+                  dev === 'devsajjadhosan@gmail.com'
+                    ? '/dashboard'
+                    : '/dashboard-login'
+                }
+              >
                 <TbPuzzle className="text-lg" />
               </Link>
             </li>
