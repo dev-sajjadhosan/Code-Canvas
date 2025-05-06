@@ -1,7 +1,6 @@
 import { AiOutlineUserSwitch } from 'react-icons/ai'
 import { GoRelFilePath } from 'react-icons/go'
-import { HiLightBulb } from 'react-icons/hi'
-import { HiMiniArrowSmallLeft, HiMiniCodeBracket } from 'react-icons/hi2'
+import { HiMiniArrowSmallLeft } from 'react-icons/hi2'
 import { LuLayers } from 'react-icons/lu'
 import { TbPuzzle } from 'react-icons/tb'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -11,6 +10,7 @@ const SideNav = () => {
   const { devS, dev } = useAuth()
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  console.log(dev)
   return (
     <>
       <div className=" flex-col justify-between items-center p-5 w-14 card fixed left-5 top-1/2 -translate-y-1/2 bg-base-200">
@@ -48,7 +48,21 @@ const SideNav = () => {
               <LuLayers className="text-lg" />
             </a>
           </li>
-          {devS || (dev === 'devsajjadhosan@gmail.com') && (
+          {devS && (
+            <li className="tooltip tooltip-right" data-tip="Projects">
+              <Link
+                to={
+                  dev === 'devsajjadhosan@gmail.com'
+                    ? '/dashboard'
+                    : '/dashboard-login'
+                }
+              >
+                <TbPuzzle className="text-lg" />
+              </Link>
+            </li>
+          )}
+
+          {dev === 'devsajjadhosan@gmail.com' && (
             <li className="tooltip tooltip-right" data-tip="Projects">
               <Link
                 to={

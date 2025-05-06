@@ -3,6 +3,7 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
+  signOut,
 } from 'firebase/auth'
 import {
   createContext,
@@ -19,8 +20,9 @@ import AuthContextType from '../types/types'
 export const authContext = createContext<AuthContextType | null>(null)
 
 const AuthProvider = ({ children }) => {
-  const [dev, setDev] = useState('')
-  const [devS, setDevS] = useState(false)
+  const [user, setUser] = useState<object | null>([])
+  const [dev, setDev] = useState<string>('')
+  const [devS, setDevS] = useState<boolean>(false)
   const [loading, setLoading] = useState(true)
   const auth = getAuth(app)
   const gP = new GoogleAuthProvider()
@@ -33,7 +35,7 @@ const AuthProvider = ({ children }) => {
       }
     })
     const unSub = onAuthStateChanged(auth, (c) => {
-      console.log(c)
+      setUser(c)
       setDev(c?.email)
       setLoading(false)
     })
@@ -42,10 +44,16 @@ const AuthProvider = ({ children }) => {
   }, [auth])
 
   const handleGP = async () => {
-    return signInWithPopup(auth, gP)
+    return signInWithPopup(auth, gP).then(() => {
+      navigate('/dashboard')
+    })
   }
 
-  const contextValues = { handleGP, dev, devS, loading }
+  const handleLogout = async () => {
+    return signOut(auth)
+  }
+
+  const contextValues = { handleGP, handleLogout, dev, devS, loading, user }
 
   return (
     <authContext.Provider value={contextValues}>

@@ -14,10 +14,10 @@ const Dashboard = () => {
   const { pathname } = useLocation()
   return (
     <div className="flex items-center justify-center h-screen relative">
-      <div className="card w-6xl p-5 bg-base-300 text-base-content text-center">
+      <div className="card w-6xl p-5 bg-base-300 text-base-content">
         <div className="mb-7 min-h-[30rem]">
           {pathname === '/dashboard' ? (
-            <div className="card gap-1 top-1/2 left-1/2 -translate-1/2 absolute ">
+            <div className="card gap-1 top-1/2 left-1/2 -translate-1/2 absolute text-center ">
               <h2 className="text-2xl font-semibold">
                 Welcome to Dashboard dev.
               </h2>
