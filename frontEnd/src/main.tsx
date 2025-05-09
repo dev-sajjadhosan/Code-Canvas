@@ -62,7 +62,6 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        {/* <RouterProvider router={routers} /> */}
         <Routes>
           <Route path="/" element={<Layout />} />
           <Route path="/detail-page/:id" element={<DetailPage />} />

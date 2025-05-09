@@ -1,14 +1,15 @@
 import { useRef, useState } from 'react'
 import { IoMdArrowDropleft } from 'react-icons/io'
+import { RiImageAddLine } from 'react-icons/ri'
 import { TbDragDrop } from 'react-icons/tb'
 
 const AddProject = () => {
   const imageRef = useRef<HTMLInputElement | null>(null)
   const featuresRef = useRef<HTMLInputElement | null>(null)
   const comingFeaturesRef = useRef<HTMLInputElement | null>(null)
-  const [features, setFeatures] = useState<String[] | undefined>([])
-  const [comingFeatures, setComingFeatures] = useState<string[] | undefined>([])
-  
+  const [image, setImage] = useState<string | null>(null)
+  const [features, setFeatures] = useState<string[] | null>([])
+  const [comingFeatures, setComingFeatures] = useState<string[] | null>([])
 
   const handleFeatures = () => {
     const data = featuresRef.current?.value
@@ -32,12 +33,24 @@ const AddProject = () => {
     comingFeaturesRef.current!.value = ''
     console.log(comingFeatures)
   }
+
+  const handleImage = () => {
+    const file = imageRef.current?.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setImage(reader.result)
+      console.log(reader.result)
+    }
+  }
+
   return (
     <>
       <div className="card p-3">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Add Project</h2>
-          <span className="btn btn-warning rounded-full font-semibold py-2">
+          <span className="btn btn-sm btn-neutral rounded-full font-semibold">
             Project #00
           </span>
         </div>
@@ -91,17 +104,49 @@ const AddProject = () => {
             />
           </div>
           <div className="w-lg">
-            <div className="">
-              <label
-                htmlFor="project"
-                className="card justify-center items-center border h-44 duration-200 cursor-pointer active:scale-95 "
-              >
-                <input type="file" name="" id="project" hidden ref={imageRef} />
-                <TbDragDrop className="text-3xl mb-2" />
-                Drag or Drop Picture Here
-              </label>
+            <div>
+              {image ? (
+                <div className="relative">
+                  <img
+                    src={image}
+                    alt=""
+                    className="w-full h-46 object-center rounded-lg"
+                  />
+                  <label
+                    htmlFor="project"
+                    className="btn btn-sm btn-ghost absolute right-5 bottom-3 tooltip"
+                    data-tip="Change Picture"
+                  >
+                    <input
+                      type="file"
+                      name=""
+                      id="project"
+                      hidden
+                      ref={imageRef}
+                      onChange={handleImage}
+                    />
+                    <RiImageAddLine className="text-lg" />
+                  </label>
+                </div>
+              ) : (
+                <label
+                  htmlFor="project"
+                  className="card justify-center items-center border h-44 duration-200 cursor-pointer active:scale-95 "
+                >
+                  <input
+                    type="file"
+                    name=""
+                    id="project"
+                    hidden
+                    ref={imageRef}
+                    onChange={handleImage}
+                  />
+                  <TbDragDrop className="text-3xl mb-2" />
+                  Drag or Drop Picture Here
+                </label>
+              )}
             </div>
-            <div className="mt-3">
+            <div className="mt-7">
               <div className="mt-3 group">
                 <input
                   type="text"
