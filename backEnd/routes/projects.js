@@ -16,8 +16,7 @@ router.post('/add-project', async (req, res) => {
   try {
     const project = new Project(projectData)
     await project.save()
-    console.log('Project added!')
-    res.status(201).json('Project Created!')
+    res.status(201).send({ message: 'project created!', status: true })
   } catch (error) {
     console.error('Add Project Error: ', error.message)
   }

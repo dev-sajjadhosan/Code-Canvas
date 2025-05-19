@@ -4,23 +4,29 @@ const ProjectSchema = new mongoose.Schema({
   name: { type: String, require: true },
   image: { type: String },
   description: { type: String },
-  projectType: { type: String },
-  projectCategory: { type: String },
-  projectStatus: { type: Boolean },
+  whyMakeThis: { type: String },
+  type: { type: String },
+  status: { type: String },
   url: {
     liveUrl: { type: String },
     repoUrl: { type: String },
   },
-  status: {
-    reacts: { type: Number, default: 0 },
-    comment: { type: mongoose.Schema.Types.Mixed, default: [{}] },
-    views: { type: Number, default: 0 },
-  },
+  // project_status: {
+  //   reacts: { type: Number, default: 0 },
+  //   comment: { type: mongoose.Schema.Types.Mixed, default: [{}] },
+  //   views: { type: Number, default: 0 },
+  // },
   codes: {
     html: { type: String },
     css: { type: String },
-    javaScript: { type: String },
-    typeScript: { type: String },
+    js: { type: String },
+    ts: { type: String },
+  },
+  features: [],
+  comingFeatures: [],
+  times: {
+    createdDate: { type: String },
+    createdTime: { type: String },
   },
 })
 

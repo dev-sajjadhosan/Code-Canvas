@@ -5,11 +5,10 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const connectDB = require('./config/db')
 const Port = process.env.PORT || 3000
-const uri = ``
+const uri = `mongodb://localhost:27017`
 
 app.use(cors())
 app.use(express.json())
-
 
 connectDB()
 

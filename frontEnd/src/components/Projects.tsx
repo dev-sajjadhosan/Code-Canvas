@@ -3,9 +3,11 @@ import CarouselContainer from './CarouselContainer'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useData from '../hooks/useData'
+import EmptyContainer from './Empty'
 
 const ProjectSection = () => {
-  const data = useData()
+  // const data = useData()
+  const data = []
   const [t, setT] = useState(1)
 
   return (
@@ -44,48 +46,53 @@ const ProjectSection = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4 mx-auto mt-10">
-        {data.slice(0, 6).map(({ id, name }, i) => {
-          const hoverClass = [
-            'hover:-translate-x-2 hover:-translate-y-2', // 0 - top-left
-            'hover:-translate-y-2', // 1 - top
-            'hover:translate-x-2 hover:-translate-y-2', // 2 - top-right
-            'hover:-translate-x-2 hover:translate-y-2', // 3 - bottom-left
-            'hover:translate-y-2', // 4 - bottom
-            'hover:translate-x-2 hover:translate-y-2', // 5 - bottom-right
-          ][i]
+      <div className="mt-10 w-fit mx-auto">
+        {data.length > 0 ? (
+          <div className="grid grid-cols-3 gap-3 mt-10">
+            {data.slice(0, 6).map(({ id, name }, i) => {
+              const hoverClass = [
+                'hover:-translate-x-2 hover:-translate-y-2', // 0 - top-left
+                'hover:-translate-y-2', // 1 - top
+                'hover:translate-x-2 hover:-translate-y-2', // 2 - top-right
+                'hover:-translate-x-2 hover:translate-y-2', // 3 - bottom-left
+                'hover:translate-y-2', // 4 - bottom
+                'hover:translate-x-2 hover:translate-y-2', // 5 - bottom-right
+              ][i]
 
-          return (
-            <Link to={`detail-page/${name}`} key={i}>
-              <div
-                className={`w-80 h-64 shrink-0 card bg-gray-800 cursor-pointer transition-all duration-200 transform ${hoverClass} active:scale-95`}
-              >
-                <img
-                  src="/logo.png"
-                  alt=""
-                  className="w-32 h-auto mx-auto mt-10"
-                />
-                <h2 className="text-xl tracking-wide absolute bottom-5 left-7">
-                  {name}
-                </h2>
-              </div>
-            </Link>
-          )
-        })}
+              return (
+                <Link to={`detail-page/${name}`} key={i}>
+                  <div
+                    className={`w-80 h-64 shrink-0 card bg-gray-800 cursor-pointer transition-all duration-200 transform ${hoverClass} active:scale-95`}
+                  >
+                    <img
+                      src="/logo.png"
+                      alt=""
+                      className="w-32 h-auto mx-auto mt-10"
+                    />
+                    <h2 className="text-xl tracking-wide absolute bottom-5 left-7">
+                      {name}
+                    </h2>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        ) : (
+          <EmptyContainer
+            title="No Project Found"
+            des={`It seems you don't have any projects yet. Start creating one!`}
+          />
+        )}
       </div>
 
-      <div className="mt-10">
+      <div className="my-20">
         {data.length > 0 ? (
           <CarouselContainer data={data} />
         ) : (
-          <div className="p-10 h-64 card gap-3 justify-center items-center text-center bg-gray-700 mt-20 mx-auto">
-            <TbFolderX className="text-4xl" />
-            <h2 className="text-2xl">No Project</h2>
-            <p className="text-sm w-2xl">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Reiciendis quasi temporibus, soluta distinctio suscipit explicabo.
-            </p>
-          </div>
+          <EmptyContainer
+            title="No Project Found"
+            des={`It seems you don't have any projects yet. Start creating one!`}
+          />
         )}
       </div>
 
