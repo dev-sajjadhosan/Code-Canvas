@@ -46,11 +46,11 @@ This site is more than just a portfolio — it's a timeline of my learning journ
 
 ## 🔗 Live Preview
 
-[👉 View the live site here](https://your-live-site-link.com)
+[👉 View the live site here](https://devcodecanvas.web.app)
 
 ## 📫 Feedback & Collaboration
 
-If you're a fellow developer or mentor and have feedback or suggestions, feel free to [open an issue](https://github.com/dev-sajjadhosan/your-repo/issues) or connect with me on [LinkedIn](https://linkedin.com/in/yourname).
+If you're a fellow developer or mentor and have feedback or suggestions, feel free to [open an issue](https://github.com/dev-sajjadhosan/your-repo/issues) or connect with me on [LinkedIn](www.linkedin.com/in/sajjad-hosan).
 
 <!-- --- -->
 
