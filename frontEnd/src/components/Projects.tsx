@@ -10,7 +10,7 @@ const ProjectSection = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center ">
+      <div className="flex flex-col lg:flex-row justify-between items-center gap-3">
         <h3 className="text-2xl">Projects</h3>
         <div className="flex items-center gap-8">
           {/* name of each tab group should be unique */}
@@ -46,7 +46,7 @@ const ProjectSection = () => {
 
       <div className="mt-10 w-fit mx-auto">
         {data.length > 0 ? (
-          <div className="grid grid-cols-3 gap-3 mt-10">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mt-10">
             {data.slice(0, 6).map(
               (
                 {
@@ -69,7 +69,7 @@ const ProjectSection = () => {
                 return (
                   <Link to={`detail-page/${name}`} key={i}>
                     <div
-                      className={`w-80 h-64 shrink-0 card bg-gray-800 cursor-pointer transition-all duration-200 transform ${hoverClass} active:scale-95 overflow-hidden`}
+                      className={`lg:w-80 lg:h-64 shrink-0 card bg-gray-800 cursor-pointer transition-all duration-200 transform ${hoverClass} active:scale-95 overflow-hidden`}
                     >
                       <img src={image} alt="" className="w-fit h-full" />
                       <h2 className="text-xl tracking-wide absolute bottom-5 left-7">

@@ -7,7 +7,7 @@ import { FaSquareJs } from 'react-icons/fa6'
 import { TbBookDownload, TbBrandCodepen, TbClipboardCopy } from 'react-icons/tb'
 import { RiArrowRightUpLine } from 'react-icons/ri'
 import useData from '../../hooks/useData'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { BiLogoTypescript } from 'react-icons/bi'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
@@ -55,10 +55,11 @@ const DetailPage = () => {
   const [pV, setPV] = useState(false)
   const [codeTab, setCodeTab] = useState('html')
   const [copy, setCopy] = useState('copy')
+  const { pathname } = useLocation()
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
+  }, [pathname])
 
   const handleCodeCopy = () => {
     if (codeRef.current) {
@@ -93,15 +94,15 @@ const DetailPage = () => {
   }
 
   return (
-    <div className="p-10 relative">
+    <div className="p-3 lg:p-10 relative">
       {/* image view */}
 
       <div
-        className={`rounded-2xl transition-all duration-250 fixed ${
+        className={`rounded-2xl transition-all duration-250 fixed p-5 ${
           pV ? 'top-1/2 opacity-100' : '-top-1/2 opacity-0'
-        }  left-1/2 -translate-1/2 w-4xl h-[30rem] bg-black/40 backdrop-blur-sm z-20 flex flex-col justify-center items-center`}
+        }  left-1/2 -translate-1/2 w-4xl lg:h-[30rem] bg-black/40 backdrop-blur-sm z-20 flex flex-col justify-center items-center`}
       >
-        <img src={image} alt="" className="card" width={600} />
+        <img src={image} alt="" className="card" width={400} />
         <button
           className="btn btn-ghost mt-5 px-8"
           onClick={() => setPV(false)}
@@ -110,7 +111,7 @@ const DetailPage = () => {
         </button>
       </div>
 
-      <div className="w-11/12 mx-auto p-5">
+      <div className="lg:w-11/12 mx-auto p-5">
         <div className="flex justify-between items-center mb-5">
           <Link
             to={'/'}
@@ -121,7 +122,7 @@ const DetailPage = () => {
           </Link>
           <h2 className="text-2xl text-right"># Project $00</h2>
         </div>
-        <div className="flex justify-between gap-3 w-full">
+        <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-3 w-full">
           <div className="relative">
             <img src={image} alt="" width={400} className="" />
             <button
