@@ -50,7 +50,7 @@ This site is more than just a portfolio — it's a timeline of my learning journ
 
 ## 📫 Feedback & Collaboration
 
-If you're a fellow developer or mentor and have feedback or suggestions, feel free to [open an issue](https://github.com/dev-sajjadhosan/your-repo/issues) or connect with me on [LinkedIn](www.linkedin.com/in/sajjad-hosan).
+If you're a fellow developer or mentor and have feedback or suggestions, feel free to [open an issue](https://github.com/dev-sajjadhosan/your-repo/issues) or connect with me on [LinkedIn](www.linkedin.com/in/devsajjadhosan).
 
 <!-- --- -->
 
