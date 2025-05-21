@@ -7,10 +7,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
 const SideNav = () => {
-  const { devS, dev } = useAuth()
+  const auth = useAuth()
+  const devS = auth?.devS
+  const dev = auth?.dev
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  console.log(dev)
   return (
     <>
       <div className=" flex-col justify-between items-center p-5 w-14 card fixed left-5 top-1/2 -translate-y-1/2 bg-base-200">

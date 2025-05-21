@@ -1,7 +1,7 @@
 import useAuth from '../hooks/useAuth'
 
 const DashboardProve = () => {
-  const { handleGP } = useAuth()
+  const auth = useAuth()
   return (
     <>
       <div className="flex items-center justify-center h-screen">
@@ -11,7 +11,7 @@ const DashboardProve = () => {
           </p>
 
           <div className="flex items-center justify-center gap-4 mt-5">
-            <button className="btn btn-warning px-6" onClick={handleGP}>
+            <button className="btn btn-warning px-6" onClick={auth?.handleGp}>
               Google Prove
             </button>
             <button className="btn btn-warning px-6" disabled>

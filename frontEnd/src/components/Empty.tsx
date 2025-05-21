@@ -1,5 +1,10 @@
 import no_data from '../assets/no-data.svg'
-const EmptyContainer = ({ title, des }) => {
+interface EmptyContainerProps {
+  title: string;
+  des: string;
+}
+
+const EmptyContainer = ({ title, des }: EmptyContainerProps) => {
   return (
     <>
       <div className="card p-10 w-xl mx-auto translate-y-1/2 ">

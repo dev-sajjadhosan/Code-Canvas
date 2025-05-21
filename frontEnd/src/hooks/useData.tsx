@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useAxios } from './useAxios'
 
 const useData = () => {
+  const axios = useAxios()
   const [data, setData] = useState([])
 
   useEffect(() => {
-    fetch('/data.json')
-      .then((re) => re.json())
-      .then((d) => setData(d))
-  }, [])
+    axios.get('/project/projects').then((p) => setData(p.data?.data))
+  }, [axios])
 
   return data
 }

@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom'
 import SideNav from './components/SideNav'
 import Home from './pages/Home/Home'
 

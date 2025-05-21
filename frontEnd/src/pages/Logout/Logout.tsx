@@ -3,14 +3,17 @@ import useAuth from '../../hooks/useAuth'
 import { TbUserEdit } from 'react-icons/tb'
 
 const Logout = () => {
-  const { user, handleLogout } = useAuth()
-  const { displayName, email, photoURL } = user
-  console.log(user)
+  const auth = useAuth()
+  if (!auth) {
+    return <div>Auth context not found.</div>
+  }
+  const { user, handleLogout } = auth
   return (
     <>
       <div className="card gap-20 flex-row p-20 w-11/12">
         <img
           src={
+            user?.photoURL ||
             'https://marketplace.canva.com/EAFqhoRVTgA/1/0/1600w/canva-grey-and-blue-cute-cartoon-anime-manga-illustrated-boy-profile-photo-avatar-u9aFvuQMzUk.jpg'
           }
           alt=""
@@ -18,8 +21,8 @@ const Logout = () => {
           className="avatar object-contain transition-all duration-100 hover:border rounded-full p-5 cursor-pointer"
         />
         <div className="text-left space-y-1 mt-18">
-          <h2 className="text-3xl font-normal">{displayName}</h2>
-          <h3 className="text-lg tracking-wide">{email}</h3>
+          <h2 className="text-3xl font-normal">{user?.displayName}</h2>
+          <h3 className="text-lg tracking-wide">{user?.email}</h3>
           <p className="text-sm font-semibold">
             "Success doesn’t stop here — come back soon and keep building your
             dreams!"

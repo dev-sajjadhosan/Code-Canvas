@@ -1,30 +1,59 @@
-import { useRef, useState } from 'react'
-import { IoMdArrowDropleft } from 'react-icons/io'
+import { SetStateAction, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RiImageAddLine } from 'react-icons/ri'
 import { TbDragDrop, TbFileCode, TbStackPush } from 'react-icons/tb'
 import useZip from '../../hooks/useZip'
 import CodeModal from './CodeModal'
 import axios from 'axios'
+import Toast from '../../components/Toast'
+import { HiOutlineTrash } from 'react-icons/hi2'
 
+interface FormData {
+  name: string
+  projectType: string
+  projectStatus: string
+  liveUrl: string
+  repoUrl: string
+  description: string
+  whyMakeThis: string
+}
 const AddProject = () => {
   const t = new Date()
-  const { register, handleSubmit, reset } = useForm()
-  const { zipRef, extractZipFile, files, loading, name } = useZip()
+  const { register, handleSubmit, reset } = useForm<FormData>()
+  // Define a type for files extracted from the zip
+  interface ZipFile {
+    name: string
+    content: string
+  }
+  const { zipRef, extractZipFile, files, setFiles, loading, name } =
+    useZip() as {
+      zipRef: React.RefObject<HTMLInputElement>
+      extractZipFile: (e: React.ChangeEvent<HTMLInputElement>) => void
+      files: ZipFile[]
+      setFiles: React.Dispatch<SetStateAction<ZipFile[]>>
+      loading: boolean
+      name: string
+    }
 
   const [isOpen, setIsOpen] = useState(false)
   const imageRef = useRef<HTMLInputElement | null>(null)
   const featuresRef = useRef<HTMLInputElement | null>(null)
   const comingFeaturesRef = useRef<HTMLInputElement | null>(null)
-  const [image, setImage] = useState<string | null>(null)
-  const [features, setFeatures] = useState<string[] | null>([])
-  const [comingFeatures, setComingFeatures] = useState<string[] | null>([])
+  const [image, setImage] = useState<File | undefined>(undefined)
+  const [features, setFeatures] = useState<string[]>([])
+  const [comingFeatures, setComingFeatures] = useState<string[]>([])
+  const [toggle, setToggle] = useState(false)
+  const [toast, setToast] = useState<{
+    title: string
+    des: string
+    type: string
+  }>({ title: '', des: '', type: '' })
 
   const key = import.meta.env.VITE_IMG_KEY
   const api = `${import.meta.env.VITE_IMG_API}?key=${key}`
 
   const handleFeatures = () => {
-    const data = featuresRef.current?.value
+    const data: string = featuresRef.current?.value ?? ''
     if (data === '') return
     if (!features.includes(data)) {
       setFeatures((prev) => [...prev, data])
@@ -33,7 +62,7 @@ const AddProject = () => {
     featuresRef.current!.value = ''
   }
   const handleComingFeatures = () => {
-    const data = comingFeaturesRef.current?.value
+    const data: string = comingFeaturesRef.current?.value ?? ''
     if (data === '') return
     if (!comingFeatures.includes(data)) {
       setComingFeatures((prev) => [...prev, data])
@@ -42,11 +71,12 @@ const AddProject = () => {
     comingFeaturesRef.current!.value = ''
   }
   const handleImage = () => {
-    const file = imageRef.current?.files?.[0]
+    const file: File | undefined = imageRef.current?.files?.[0]
     if (!file) return
     setImage(file)
   }
-  const handleDropImage = (e) => {
+
+  const handleDropImage = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault()
     e.stopPropagation()
     const file = e.dataTransfer.files?.[0]
@@ -55,7 +85,7 @@ const AddProject = () => {
     }
   }
 
-  const handlePushProject = async (e) => {
+  const handlePushProject = async (e: FormData) => {
     // e.preventDefault()
     const file = image
     if (!file) return
@@ -94,17 +124,32 @@ const AddProject = () => {
     if (data)
       await axios
         .post('http://localhost:3000/project/add-project', data)
-        .then((re) => console.log(re.data))
-    setImage(null)
+        .then((re) => {
+          setToast({
+            title: 'Project Added!',
+            des: 'The Project has been added to sever. Go to Home or Project Page to see the project.',
+            type: 'success',
+          })
+          setToggle(true)
+          console.log(re.data)
+        })
+    reset()
+    setImage(undefined)
     setFeatures([])
     setComingFeatures([])
-    zipRef.current!.value = ''
+    setFiles([])
     setIsOpen(false)
-    reset()
   }
 
   return (
     <>
+      <Toast
+        toggle={toggle}
+        setToggle={setToggle}
+        title={toast?.title}
+        des={toast?.des}
+        type={toast?.type}
+      />
       <CodeModal isOpen={isOpen} setIsOpen={setIsOpen} files={files} />
       {/* ------------- */}
       <form className="card p-3" onSubmit={handleSubmit(handlePushProject)}>
@@ -127,12 +172,22 @@ const AddProject = () => {
               {loading ? (
                 <span className="loading loading-dots mx-auto cursor-not-allowed"></span>
               ) : files.length > 0 ? (
-                <button
-                  className="btn btn-primary"
-                  onClick={() => setIsOpen(!isOpen)}
-                >
-                  <TbFileCode size={18} /> Show Codes
-                </button>
+                <div className="join">
+                  <button
+                    className="btn btn-primary join-item"
+                    onClick={() => setIsOpen(!isOpen)}
+                  >
+                    <TbFileCode size={18} /> Show Codes
+                  </button>
+                  <button
+                    className="btn btn-error join-item tooltip"
+                    data-tip="Delete Zip"
+                    type="button"
+                    onClick={() => setFiles([])}
+                  >
+                    <HiOutlineTrash className="text-lg" />
+                  </button>
+                </div>
               ) : (
                 <input
                   type="file"
@@ -245,7 +300,11 @@ const AddProject = () => {
                   placeholder="Features"
                   ref={featuresRef}
                 />
-                <button className="btn join-item" onClick={handleFeatures}>
+                <button
+                  className="btn join-item"
+                  onClick={handleFeatures}
+                  type="button"
+                >
                   Add
                 </button>
               </div>
@@ -268,6 +327,7 @@ const AddProject = () => {
                 <button
                   className="btn join-item"
                   onClick={handleComingFeatures}
+                  type="button"
                 >
                   Add
                 </button>

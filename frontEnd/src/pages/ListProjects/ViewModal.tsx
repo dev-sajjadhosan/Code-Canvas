@@ -1,4 +1,9 @@
-const ViewModal = ({ isOpen, setIsOpen }) => {
+type ViewModalProps = {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+};
+
+const ViewModal = ({ isOpen, setIsOpen }: ViewModalProps) => {
   return (
     <>
       <div

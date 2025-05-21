@@ -5,7 +5,6 @@ import { HiOutlineDownload } from 'react-icons/hi'
 import { HiHome } from 'react-icons/hi2'
 import {
   TbActivityHeartbeat,
-  TbDeviceUnknownFilled,
   TbListDetails,
   TbPencilCode,
   TbSettingsCode,

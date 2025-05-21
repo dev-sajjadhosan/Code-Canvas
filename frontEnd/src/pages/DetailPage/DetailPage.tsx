@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { IoMdArrowDropleft } from 'react-icons/io'
 import { LuImageDown, LuImageUpscale } from 'react-icons/lu'
 import CarouselContainer from '../../components/CarouselContainer'
@@ -11,33 +11,54 @@ import { Link, useParams } from 'react-router-dom'
 import { BiLogoTypescript } from 'react-icons/bi'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
+import { HiHome } from 'react-icons/hi2'
 
 const DetailPage = () => {
   const { id } = useParams()
   const codeRef = useRef<HTMLElement | null>(null)
+  // Define the type for your project data
+  type ProjectData = {
+    name?: string
+    type?: string
+    status?: string
+    url?: { liveUrl?: string }
+    description?: string
+    whyIMakeThis?: string
+    image?: string
+    features?: string[]
+    comingFeatures?: string[]
+    codes?: {
+      html?: string
+      css?: string
+      js?: string
+      ts?: string
+    }
+  }
+
   const data = useData()
-  const findData = data.find((d) => d?.name === id)
+  const findData = data.find((d: ProjectData) => d?.name === id) as
+    | ProjectData
+    | undefined
   const {
     name,
-    category,
-    projectType,
-    langUsed,
-    like,
-    view,
-    comment,
-    liveLink,
-    githubRepoLink,
+    type,
+    status,
+    url,
     description,
     whyIMakeThis,
     image,
     features,
     comingFeatures,
-    code,
+    codes,
   } = findData ?? {}
   // console.log(Object.keys(findData ?? {}).join());
   const [pV, setPV] = useState(false)
-  const [codeTab, setCodeTab] = useState('HTML')
+  const [codeTab, setCodeTab] = useState('html')
   const [copy, setCopy] = useState('copy')
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const handleCodeCopy = () => {
     if (codeRef.current) {
@@ -55,15 +76,15 @@ const DetailPage = () => {
   }
 
   const handleZipFile = () => {
-    if (!code) return
+    if (!codes) return
 
     const zip = new JSZip()
-    zip.file('index.html', code?.HTML || '')
-    zip.file('style.css', code?.CSS || '')
-    if (codeTab === 'JavaScript') {
-      zip.file('script.js', code?.JavaScript || '')
+    zip.file('index.html', codes?.html || '')
+    zip.file('style.css', codes?.css || '')
+    if (codeTab === 'js') {
+      zip.file('script.js', codes?.js || '')
     } else {
-      zip.file('tsScript.js', code?.TypeScript || '')
+      zip.file('tsScript.js', codes?.ts || '')
     }
 
     zip.generateAsync({ type: 'blob' }).then((c) => {
@@ -80,12 +101,7 @@ const DetailPage = () => {
           pV ? 'top-1/2 opacity-100' : '-top-1/2 opacity-0'
         }  left-1/2 -translate-1/2 w-4xl h-[30rem] bg-black/40 backdrop-blur-sm z-20 flex flex-col justify-center items-center`}
       >
-        <img
-          src="https://s3-alpha.figma.com/hub/file/3848251683/051f60df-fc0f-408c-80fe-744e346dce2f-cover.png"
-          alt=""
-          className="card"
-          width={600}
-        />
+        <img src={image} alt="" className="card" width={600} />
         <button
           className="btn btn-ghost mt-5 px-8"
           onClick={() => setPV(false)}
@@ -95,10 +111,19 @@ const DetailPage = () => {
       </div>
 
       <div className="w-11/12 mx-auto p-5">
-        <h2 className="text-2xl text-right mb-3"># Project $00</h2>
+        <div className="flex justify-between items-center mb-5">
+          <Link
+            to={'/'}
+            className="btn btn-sm btn-ghost px-4 font-light tooltip "
+            data-tip="Home"
+          >
+            <HiHome className="text-lg" />
+          </Link>
+          <h2 className="text-2xl text-right"># Project $00</h2>
+        </div>
         <div className="flex justify-between gap-3 w-full">
           <div className="relative">
-            <img src="/logo.png" alt="" width={400} className="" />
+            <img src={image} alt="" width={400} className="" />
             <button
               className="btn btn-sm btn-ghost absolute bottom-5 right-5"
               onClick={() => setPV(true)}
@@ -107,25 +132,24 @@ const DetailPage = () => {
             </button>
           </div>
           <div className="p-4 w-xl space-y-2">
-            <h1 className="text-2xl ">
-              {name} <span className="badge badge-xs">{projectType}</span>
-            </h1>
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl ">
+                {name} <span className="badge badge-xs">{type}</span>
+              </h1>
+              <span className="badge badge-info font-semibold capitalize">
+                {status}
+              </span>
+            </div>
             <p className="text-sm tracking-wide first-letter:text-3xl">
               {description}
             </p>
             <div className="mt-5 space-x-1 ml-5">
-              <Link
-                to={'https://github.com/dev-sajjadhosan?tab=repositories'}
-                className="btn btn-link"
-              >
+              <a href={`https://${url?.liveUrl}`} className="btn btn-link">
                 Live <RiArrowRightUpLine className="text-lg" />
-              </Link>
-              <Link
-                to={'https://github.com/dev-sajjadhosan?tab=repositories'}
-                className="btn btn-link"
-              >
+              </a>
+              <button disabled className="btn btn-link">
                 github <FaGithub className="text-lg" />
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -137,10 +161,27 @@ const DetailPage = () => {
           <div className="self-start">
             <h2 className="text-2xl">Created by</h2>
             <div className="grid grid-cols-3 gap-5 mt-5">
-              {langUsed?.map((lang, i) => (
-                <span className="btn" key={i}>
-                  {lang}
-                </span>
+              {Object.keys(codes ?? {}).map((name) => (
+                <button key={name} className={`btn btn-sm btn-ghost`}>
+                  {name === 'html' ? (
+                    <>
+                      {' '}
+                      <FaHtml5 className="text-sm" /> Html
+                    </>
+                  ) : name === 'css' ? (
+                    <>
+                      <FaCss3Alt className="text-sm" /> Css
+                    </>
+                  ) : name === 'js' ? (
+                    <>
+                      <FaSquareJs className="text-sm" /> JavaScript
+                    </>
+                  ) : (
+                    <>
+                      <BiLogoTypescript className="text-lg" /> TypeScript
+                    </>
+                  )}
+                </button>
               ))}
             </div>
           </div>
@@ -179,7 +220,7 @@ const DetailPage = () => {
 
       <div className="mt-10 flex flex-col">
         <div className="flex self-end mr-5 gap-2">
-          {Object.keys(code ?? {}).map((name) => (
+          {Object.keys(codes ?? {}).map((name) => (
             <button
               key={name}
               role="tab"
@@ -189,11 +230,11 @@ const DetailPage = () => {
               data-tip={name}
               onClick={() => setCodeTab(name)}
             >
-              {name === 'HTML' ? (
+              {name === 'html' ? (
                 <FaHtml5 className="text-sm" />
-              ) : name === 'CSS' ? (
+              ) : name === 'css' ? (
                 <FaCss3Alt className="text-sm" />
-              ) : name === 'JavaScript' ? (
+              ) : name === 'js' ? (
                 <FaSquareJs className="text-sm" />
               ) : (
                 <BiLogoTypescript className="text-lg" />
@@ -201,15 +242,15 @@ const DetailPage = () => {
             </button>
           ))}
         </div>
-        <div className="mt-3 card bg-neutral-700 p-8 min-h-80 overflow-auto relative">
+        <div className="mt-3 card bg-neutral-700 p-10 min-h-80 overflow-auto relative">
           <div className="sticky top-0 flex items-center justify-between mb-3">
             <p className="text-sm text-info font-semibold flex items-center gap-1">
               ./
-              {codeTab === 'HTML' ? (
+              {codeTab === 'html' ? (
                 <FaHtml5 className="text-lg" />
-              ) : codeTab === 'CSS' ? (
+              ) : codeTab === 'css' ? (
                 <FaCss3Alt className="text-lg" />
-              ) : codeTab === 'JavaScript' ? (
+              ) : codeTab === 'js' ? (
                 <FaSquareJs className="text-lg" />
               ) : (
                 <BiLogoTypescript className="text-lg" />
@@ -241,18 +282,18 @@ const DetailPage = () => {
               </button>
             </div>
           </div>
-          <pre>
+          <pre className="h-[40rem]">
             <code
-              className="text-sm transform transition-all duration-150"
+              className="text-sm transform transition-all duration-150 pb-4"
               ref={codeRef}
             >
-              {codeTab === 'HTML'
-                ? code?.HTML
-                : codeTab === 'CSS'
-                ? code?.CSS
-                : codeTab === 'JavaScript'
-                ? code?.JavaScript
-                : code?.TypeScript}
+              {codeTab === 'html'
+                ? codes?.html
+                : codeTab === 'css'
+                ? codes?.css
+                : codeTab === 'js'
+                ? codes?.js
+                : codes?.ts}
             </code>
           </pre>
         </div>

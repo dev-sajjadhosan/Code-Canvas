@@ -1,4 +1,5 @@
 import ProjectSection from '../../components/Projects'
+// import Toast from '../../components/Toast'
 
 const Home = () => {
   return (
@@ -17,6 +18,11 @@ const Home = () => {
         </p>
       </div>
       <ProjectSection />
+      {/* <Toast
+        title="Project Added!"
+        des="A collection of foundational projects showcasing my skills in core web technologies. Each project demonstrates my understanding of structure (HTML5), styling (CSS3), "
+        type="success"
+      /> */}
     </>
   )
 }

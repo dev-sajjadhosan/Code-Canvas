@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { authContext } from '../Auth/AuthProvider'
+import { AuthContext } from '../types/types'
 
 export default function useAuth() {
-  return useContext(authContext)
+  return useContext(AuthContext)
 }

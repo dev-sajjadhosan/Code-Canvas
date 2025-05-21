@@ -1,13 +1,11 @@
-import { TbFolderX } from 'react-icons/tb'
 import CarouselContainer from './CarouselContainer'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import useData from '../hooks/useData'
 import EmptyContainer from './Empty'
 
 const ProjectSection = () => {
-  // const data = useData()
-  const data = []
+  const data = useData()
   const [t, setT] = useState(1)
 
   return (
@@ -49,33 +47,39 @@ const ProjectSection = () => {
       <div className="mt-10 w-fit mx-auto">
         {data.length > 0 ? (
           <div className="grid grid-cols-3 gap-3 mt-10">
-            {data.slice(0, 6).map(({ id, name }, i) => {
-              const hoverClass = [
-                'hover:-translate-x-2 hover:-translate-y-2', // 0 - top-left
-                'hover:-translate-y-2', // 1 - top
-                'hover:translate-x-2 hover:-translate-y-2', // 2 - top-right
-                'hover:-translate-x-2 hover:translate-y-2', // 3 - bottom-left
-                'hover:translate-y-2', // 4 - bottom
-                'hover:translate-x-2 hover:translate-y-2', // 5 - bottom-right
-              ][i]
+            {data.slice(0, 6).map(
+              (
+                {
+                  name,
+                  // type,
+                  // status,
+                  image,
+                },
+                i,
+              ) => {
+                const hoverClass = [
+                  'hover:-translate-x-2 hover:-translate-y-2', // 0 - top-left
+                  'hover:-translate-y-2', // 1 - top
+                  'hover:translate-x-2 hover:-translate-y-2', // 2 - top-right
+                  'hover:-translate-x-2 hover:translate-y-2', // 3 - bottom-left
+                  'hover:translate-y-2', // 4 - bottom
+                  'hover:translate-x-2 hover:translate-y-2', // 5 - bottom-right
+                ][i]
 
-              return (
-                <Link to={`detail-page/${name}`} key={i}>
-                  <div
-                    className={`w-80 h-64 shrink-0 card bg-gray-800 cursor-pointer transition-all duration-200 transform ${hoverClass} active:scale-95`}
-                  >
-                    <img
-                      src="/logo.png"
-                      alt=""
-                      className="w-32 h-auto mx-auto mt-10"
-                    />
-                    <h2 className="text-xl tracking-wide absolute bottom-5 left-7">
-                      {name}
-                    </h2>
-                  </div>
-                </Link>
-              )
-            })}
+                return (
+                  <Link to={`detail-page/${name}`} key={i}>
+                    <div
+                      className={`w-80 h-64 shrink-0 card bg-gray-800 cursor-pointer transition-all duration-200 transform ${hoverClass} active:scale-95 overflow-hidden`}
+                    >
+                      <img src={image} alt="" className="w-fit h-full" />
+                      <h2 className="text-xl tracking-wide absolute bottom-5 left-7">
+                        {name}
+                      </h2>
+                    </div>
+                  </Link>
+                )
+              },
+            )}
           </div>
         ) : (
           <EmptyContainer

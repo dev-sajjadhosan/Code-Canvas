@@ -11,7 +11,13 @@ const getIconForFile = (filename: string) => {
   return null
 }
 
-const CodeModal = ({ isOpen, setIsOpen, files }) => {
+interface CodeModalProps {
+  isOpen: boolean
+  setIsOpen: (open: boolean) => void
+  files: { name: string; content: string }[]
+}
+
+const CodeModal = ({ isOpen, setIsOpen, files }: CodeModalProps) => {
   const codeRef = useRef<HTMLElement | null>(null)
   const [codeTab, setCodeTab] = useState('')
 

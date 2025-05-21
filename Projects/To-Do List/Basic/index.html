@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo - Basic</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css"
+      integrity="sha512-v8QQ0YQ3H4K6Ic3PJkym91KoeNT5S3PnDKvqnwqFD1oiqIl653crGZplPdU5KKtHjO0QKcQ2aUlQZYjHczkmGw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <p class="title">ToDo - basic</p>
+        <span class="todo-output">list - 00</span>
+      </header>
+      <div class="todo-container">
+        <div class="empty-card">
+          <img src="/image/empty.svg" width="120" alt="" />
+          <h3>No List</h3>
+          <p>There is no Todo list added! Please, add some to see</p>
+        </div>
+        <ul class="todo-lists">
+          <!-- <li>
+            <label for="checkbox" class="list">
+              <input type="checkbox" class="checkbox" id="checkbox" hidden />
+              <p class="text">todoObj.text</p>
+              <button class="remove">X</button>
+            </label>
+          </li> -->
+        </ul>
+      </div>
+      <div class="new-todo">
+        <div class="todo-con">
+          <label for="color" class="co" id="co">
+            <input type="color" name="" id="color" hidden />
+          </label>
+          <input
+            type="text"
+            placeholder="Write a new ToDo"
+            class="input"
+            hidden
+            required
+          />
+        </div>
+        <div class="btns">
+          <button class="todo add start">New ToDo</button>
+          <button class="todo close">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>

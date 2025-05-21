@@ -1,9 +1,15 @@
 import { Navigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 
-const DevRoutes = ({ children }) => {
-  const { dev, loading } = useAuth()
-  if (loading)
+import { ReactNode } from 'react'
+
+interface DevRoutesProps {
+  children: ReactNode
+}
+
+const DevRoutes = ({ children }: DevRoutesProps) => {
+  const auth = useAuth()
+  if (!auth || auth.loading)
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="card p-10">
@@ -11,7 +17,7 @@ const DevRoutes = ({ children }) => {
         </div>
       </div>
     )
-  if (dev === 'devsajjadhosan@gmail.com') return <>{children}</>
+  if (auth.dev === 'devsajjadhosan@gmail.com') return <>{children}</>
   else return <Navigate to={'/'} />
 }
 

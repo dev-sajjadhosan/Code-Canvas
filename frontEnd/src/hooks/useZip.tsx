@@ -3,42 +3,47 @@ import { useRef, useState } from 'react'
 
 const useZip = () => {
   const zipRef = useRef<HTMLInputElement | null>(null)
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<{ name: string; content: string }[]>([])
   const [name, setName] = useState<string>('')
   const [loading, setLoading] = useState(false)
 
   const extractZipFile = () => {
-    const zip = zipRef.current?.files?.[0]
-    if (!zip) return
-    console.log(zipRef.current?.files?.[0])
-    setName(zip?.name.split('.')[0] || '')
+    const zipFile = zipRef.current?.files?.[0]
+    if (!zipFile) return
 
+    setName(zipFile.name.split('.')[0] || '')
     setLoading(true)
+
     const reader = new FileReader()
     reader.onload = async (e) => {
       try {
         const arrayBuffer = e.target?.result
+        if (!arrayBuffer) throw new Error('Failed to read zip file')
+
         const zip = await JSZip.loadAsync(arrayBuffer)
-        const fileData = []
+        const extractedFiles: { name: string; content: string }[] = []
 
         for (const fileName in zip.files) {
           const file = zip.files[fileName]
-          if (!file.dir) {
+          // Skip folders or files inside folders
+          if (!file.dir && !fileName.includes('/')) {
             const content = await file.async('string')
-            fileData.push({ name: fileName, content })
+            extractedFiles.push({ name: fileName, content })
           }
         }
-        setFiles(fileData)
+
+        setFiles(extractedFiles)
       } catch (err) {
-        console.log(err)
+        console.error('Error extracting zip:', err)
       } finally {
         setLoading(false)
       }
     }
-    reader.readAsArrayBuffer(zip)
+
+    reader.readAsArrayBuffer(zipFile)
   }
 
-  return { zipRef, extractZipFile, files, loading, name }
+  return { zipRef, extractZipFile, files, loading, name, setFiles }
 }
 
 export default useZip
